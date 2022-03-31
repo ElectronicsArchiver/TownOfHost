@@ -103,13 +103,6 @@ namespace TownOfHost
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.G) && AmongUsClient.Instance.GameMode == GameModes.FreePlay)
-            {
-                HudManager.Instance.StartCoroutine(HudManager.Instance.CoFadeFullScreen(Color.clear, Color.black));
-                var list = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
-                list.Add(PlayerControl.LocalPlayer);
-                HudManager.Instance.StartCoroutine(DestroyableSingleton<HudManager>.Instance.CoShowIntro(list));
-            }
             if (Input.GetKeyDown(KeyCode.Equals) && AmongUsClient.Instance.GameMode == GameModes.FreePlay)
             {
                 main.VisibleTasksCount = !main.VisibleTasksCount;
@@ -204,7 +197,7 @@ namespace TownOfHost
     }
     class HandleHUDPatch {
         public static void Postfix(Rewired.Player player) {
-            if(player.GetButtonDown(8) && 
+            if(player.GetButtonDown(8) &&
             PlayerControl.LocalPlayer.Data?.Role?.IsImpostor == false &&
             PlayerControl.LocalPlayer.isSheriff()) {
                 DestroyableSingleton<HudManager>.Instance.KillButton.DoClick();

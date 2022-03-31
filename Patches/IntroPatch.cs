@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TownOfHost
 {
-    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.SetUpRoleText))]
+    [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.RoleText))]
     class SetUpRoleTextPatch {
         static Dictionary<CustomRoles, lang> RoleAndInfo = new Dictionary<CustomRoles, lang>() {
             {CustomRoles.Jester, lang.JesterInfo},
