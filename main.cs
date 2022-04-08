@@ -93,54 +93,6 @@ namespace TownOfHost
         public static byte WonArsonistID;
         public static bool CustomWinTrigger;
         public static bool VisibleTasksCount;
-        public class OverrideTasksData
-        {
-            public CustomRoles TargetRole;
-            public CustomOption doOverride;
-            public CustomOption hasCommonTasks;
-            public CustomOption NumLongTasks;
-            public CustomOption NumShortTasks;
-            public void CheckAndSet(
-                CustomRoles currentTargetRole,
-                ref bool doOverride,
-                ref bool hasCommonTasks,
-                ref int NumLongTasks,
-                ref int NumShortTasks
-            )
-            {
-                if (currentTargetRole == this.TargetRole && this.doOverride.GetBool())
-                {
-                    doOverride = true;
-                    hasCommonTasks = this.hasCommonTasks.GetBool();
-                    NumLongTasks = (int)this.NumLongTasks.GetFloat();
-                    NumShortTasks = (int)this.NumShortTasks.GetFloat();
-                }
-            }
-            public void Serialize(MessageWriter writer)
-            {
-                writer.Write(doOverride.GetBool());
-                writer.Write(hasCommonTasks.GetBool());
-                writer.Write((int)NumLongTasks.GetFloat());
-                writer.Write((int)NumShortTasks.GetFloat());
-            }
-            public void Deserialize(MessageReader reader)
-            {
-                this.doOverride.UpdateSelection(reader.ReadBoolean());
-                this.hasCommonTasks.UpdateSelection(reader.ReadBoolean());
-                this.NumLongTasks.UpdateSelection(reader.ReadInt32());
-                this.NumShortTasks.UpdateSelection(reader.ReadInt32());
-            }
-            public OverrideTasksData Create(CustomRoles targetRole, int offset)
-            {
-                var data = new OverrideTasksData();
-                data.TargetRole = targetRole;
-                data.doOverride = CustomOption.Create(offset, Utils.getRoleColor(targetRole), "doOverride", false, Options.CustomRoleSpawnChances[targetRole]);
-                data.hasCommonTasks = CustomOption.Create(offset + 1, Utils.getRoleColor(targetRole), "hasCommonTasks", false, data.doOverride);
-                data.NumLongTasks = CustomOption.Create(offset + 2, Utils.getRoleColor(targetRole), "roleLongTasksNum", false, data.doOverride);
-                data.NumShortTasks = CustomOption.Create(offset + 3, Utils.getRoleColor(targetRole), "roleShortTasksNum", false, data.doOverride);
-                return data;
-            }
-        }
         public static string nickName = "";
 
         public static main Instance;

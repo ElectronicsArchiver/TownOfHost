@@ -31,39 +31,42 @@ namespace TownOfHost
     }
 
     [HarmonyPatch(typeof(GameData), nameof(GameData.RpcSetTasks))]
-    class RpcSetTasksPatch {
+    class RpcSetTasksPatch
+    {
         public static void Prefix(GameData __instance,
         [HarmonyArgument(0)] byte playerId,
-        [HarmonyArgument(1)] ref UnhollowerBaseLib.Il2CppStructArray<byte> taskTypeIds) {
+        [HarmonyArgument(1)] ref UnhollowerBaseLib.Il2CppStructArray<byte> taskTypeIds)
+        {
             //null対策
-            if(main.RealOptionsData == null) {
+            if (main.RealOptionsData == null)
+            {
                 Logger.warn("警告:RealOptionsDataがnullです。(RppcSetTasksPatch.Prefix)");
                 return;
             }
 
             CustomRoles? RoleNullable = Utils.getPlayerById(playerId)?.getCustomRole();
             CustomRoles role = CustomRoles.Crewmate;
-            if(RoleNullable == null) return;
+            if (RoleNullable == null) return;
             else role = RoleNullable.Value;
-            
+
             bool doOverride = false;
 
             bool hasCommonTasks = true;
             int NumLongTasks = main.RealOptionsData.NumLongTasks;
             int NumShortTasks = main.RealOptionsData.NumShortTasks;
-            
-            Options.MadGuardianTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
-            Options.TerroristTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
-            Options.SnitchTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
-            Options.MadSnitchTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
 
-            if(!doOverride) return;
+            //Options.MadGuardianTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
+            //Options.TerroristTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
+            //Options.SnitchTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
+            //Options.MadSnitchTasksData.CheckAndSet(role, ref doOverride, ref hasCommonTasks, ref NumLongTasks, ref NumShortTasks);
+
+            if (!doOverride) return;
             Il2CppSystem.Collections.Generic.List<byte> TasksList = new Il2CppSystem.Collections.Generic.List<byte>();
-            foreach(var num in taskTypeIds)
+            foreach (var num in taskTypeIds)
                 TasksList.Add(num);
-            
+
             //参考:ShipStatus.Begin
-            if(hasCommonTasks) TasksList.RemoveRange(main.RealOptionsData.NumCommonTasks, TasksList.Count - main.RealOptionsData.NumCommonTasks);
+            if (hasCommonTasks) TasksList.RemoveRange(main.RealOptionsData.NumCommonTasks, TasksList.Count - main.RealOptionsData.NumCommonTasks);
             else TasksList.Clear();
 
             Il2CppSystem.Collections.Generic.HashSet<TaskTypes> usedTaskTypes = new Il2CppSystem.Collections.Generic.HashSet<TaskTypes>();
@@ -71,12 +74,12 @@ namespace TownOfHost
             int start3 = 0;
 
             Il2CppSystem.Collections.Generic.List<NormalPlayerTask> LongTasks = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
-            foreach(var task in ShipStatus.Instance.LongTasks)
+            foreach (var task in ShipStatus.Instance.LongTasks)
                 LongTasks.Add(task);
             Shuffle<NormalPlayerTask>(LongTasks);
 
             Il2CppSystem.Collections.Generic.List<NormalPlayerTask> ShortTasks = new Il2CppSystem.Collections.Generic.List<NormalPlayerTask>();
-            foreach(var task in ShipStatus.Instance.NormalTasks)
+            foreach (var task in ShipStatus.Instance.NormalTasks)
                 ShortTasks.Add(task);
             Shuffle<NormalPlayerTask>(ShortTasks);
 
@@ -96,13 +99,16 @@ namespace TownOfHost
             );
 
             taskTypeIds = new UnhollowerBaseLib.Il2CppStructArray<byte>(TasksList.Count);
-            for(int i = 0; i < TasksList.Count; i++) {
+            for (int i = 0; i < TasksList.Count; i++)
+            {
                 taskTypeIds[i] = TasksList[i];
             }
 
         }
-        public static void Shuffle<T>(Il2CppSystem.Collections.Generic.List<T> list) {
-            for(int i = 0; i < list.Count - 1; i++) {
+        public static void Shuffle<T>(Il2CppSystem.Collections.Generic.List<T> list)
+        {
+            for (int i = 0; i < list.Count - 1; i++)
+            {
                 T obj = list[i];
                 int rand = UnityEngine.Random.Range(i, list.Count);
                 list[i] = list[rand];

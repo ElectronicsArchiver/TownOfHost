@@ -114,10 +114,6 @@ namespace TownOfHost
                     int BHDefaultKillCooldown = reader.ReadInt32();
                     int DefaultShapeshiftCooldown = reader.ReadInt32();
                     int ShapeMasterShapeshiftDuration = reader.ReadInt32();
-                    Options.MadGuardianTasksData.Deserialize(reader);
-                    Options.TerroristTasksData.Deserialize(reader);
-                    Options.SnitchTasksData.Deserialize(reader);
-                    Options.MadSnitchTasksData.Deserialize(reader);
                     bool CanBeforeSchrodingerCatWinTheCrewmate = reader.ReadBoolean();
                     bool SchrodingerCatExiledTeamChanges = reader.ReadBoolean();
                     bool AutoDisplayLastResult = reader.ReadBoolean();
@@ -471,10 +467,6 @@ namespace TownOfHost
             writer.Write(Options.BountyFailureKillCooldown.GetSelection());
             writer.Write(Options.BHDefaultKillCooldown.GetSelection());
             writer.Write(Options.ShapeMasterShapeshiftDuration.GetSelection());
-            Options.MadGuardianTasksData.Serialize(writer);
-            Options.TerroristTasksData.Serialize(writer);
-            Options.SnitchTasksData.Serialize(writer);
-            Options.MadSnitchTasksData.Serialize(writer);
             writer.Write(Options.EnableLastImpostor.GetBool());
             writer.Write(Options.LastImpostorKillCooldown.GetSelection());
             writer.Write(Options.DefaultShapeshiftCooldown.GetSelection());

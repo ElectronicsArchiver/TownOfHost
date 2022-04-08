@@ -151,11 +151,26 @@ namespace TownOfHost
 
 
         public static int SnitchExposeTaskLeft = 1;
-
-        public static main.OverrideTasksData MadGuardianTasksData;
-        public static main.OverrideTasksData TerroristTasksData;
-        public static main.OverrideTasksData SnitchTasksData;
-        public static main.OverrideTasksData MadSnitchTasksData;
+        public static CustomOption doOverride;
+        public static CustomOption hasCommonTasks;
+        public static CustomOption NumLongTasks;
+        public static CustomOption NumShortTasks;
+        public static CustomOption OverrideMadGuardianTask;
+        public static CustomOption MadGuardianHasCommonTasks;
+        public static CustomOption NumMadGuardianLongTasks;
+        public static CustomOption NumMadGuardianShortTasks;
+        public static CustomOption OverrideTerroristTask;
+        public static CustomOption TerroristHasCommonTasks;
+        public static CustomOption NumTerroristLongTasks;
+        public static CustomOption NumTerroristShortTasks;
+        public static CustomOption OverrideSnitchTask;
+        public static CustomOption SnitchHasCommonTasks;
+        public static CustomOption NumSnitchLongTasks;
+        public static CustomOption NumSnitchShortTasks;
+        public static CustomOption OverrideMadSnitchTask;
+        public static CustomOption MadSnitchHasCommonTasks;
+        public static CustomOption NumMadSnitchLongTasks;
+        public static CustomOption NumMadSnitchShortTasks;
 
         public static bool IsEvilWatcher = false;
         public static void SetWatcherTeam(float EvilWatcherRate)
